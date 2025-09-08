@@ -1,5 +1,4 @@
-<div class="container">
-<!--   <div class="line"></div> -->
+<!-- <div class="container">
   <div class="col up-shift">
     <div class="square bone down-shift-one-with-half">
       <span class="symbol minus down-shift-double">-</span>
@@ -12,4 +11,21 @@
   <div class="grid-box">
     <div class="svg-img"></div>
    </div>
-</div>
+
+</div> -->
+<header>
+  <nav>
+    <a routerLink="/home" routerLinkActive="active">Главная</a> |
+    <a routerLink="/colormatch" routerLinkActive="active">ColorMatch</a> |
+    <a routerLink="/flexrouble" routerLinkActive="active">FlexRouble</a> |
+    <a routerLink="/works" routerLinkActive="active">Works</a> |
+    <a routerLink="/credits" routerLinkActive="active">Credits</a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+<footer>
+  <p>Angular {{ angularVersion }}</p>
+</footer>

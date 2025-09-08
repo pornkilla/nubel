@@ -95,6 +95,14 @@
     background-size: 100% auto;
   }
 
+  footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+
   @keyframes rotate {
     0% {
       transform: rotate(45deg);
