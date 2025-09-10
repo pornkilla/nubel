@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, VERSION } from '@angular/core';
 
 @Component({
   selector: 'app-credits',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './credits.component.scss'
 })
 export class CreditsComponent {
-
+  angularVersion = VERSION.full;
 }

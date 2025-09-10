@@ -33,7 +33,10 @@
               "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [ "src/", "node_modules"]
+              "includePaths": [
+                "src/",
+                "node_modules"
+              ]
             },
             "scripts": []
           },

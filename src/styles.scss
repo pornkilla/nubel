@@ -23,3 +23,25 @@ app-root {
   @include center;
   flex: 1;
 }
+.text-tahion-bold {
+  font-family: 'Tahion Bold', sans-serif;
+}
+.text-tahion-n {
+  font-family: 'Tahion Narrow', sans-serif;
+}
+
+@font-face {
+  font-family: 'Tahion Bold';
+  src: 
+    url('assets/fonts/tahion/bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'Tahion Narrow';
+  src: 
+    url('assets/fonts/tahion/narrow-u.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}

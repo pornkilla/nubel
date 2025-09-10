@@ -1,31 +1,18 @@
-<!-- <div class="container">
-  <div class="col up-shift">
-    <div class="square bone down-shift-one-with-half">
-      <span class="symbol minus down-shift-double">-</span>
-      <span class="symbol equal">=</span>  
-    </div>
-    <span class="square symbol cross rotate pulse">×</span>
-    <span class="square word up-shift-quarter">welcome</span>
-  </div>
-  <div class="vr"></div>
-  <div class="grid-box">
-    <div class="svg-img"></div>
-   </div>
+<div class="content-wrapper">
+  <header>
+    <nav>
+      <a routerLink="/home" routerLinkActive="active">Главная</a> |
+      <a routerLink="/colormatch" routerLinkActive="active">ColorMatch</a> |
+      <a routerLink="/flexrouble" routerLinkActive="active">FlexRouble</a> |
+      <a routerLink="/works" routerLinkActive="active">Works</a> |
+      <a routerLink="/credits" routerLinkActive="active">Credits</a>
+    </nav>
+  </header>
 
-</div> -->
-<header>
-  <nav>
-    <a routerLink="/home" routerLinkActive="active">Главная</a> |
-    <a routerLink="/colormatch" routerLinkActive="active">ColorMatch</a> |
-    <a routerLink="/flexrouble" routerLinkActive="active">FlexRouble</a> |
-    <a routerLink="/works" routerLinkActive="active">Works</a> |
-    <a routerLink="/credits" routerLinkActive="active">Credits</a>
-  </nav>
-</header>
-
-<main>
-  <router-outlet></router-outlet>
-</main>
-<footer>
-  <p>Angular {{ angularVersion }}</p>
-</footer>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <p>$</p>
+  </footer>
+</div>
