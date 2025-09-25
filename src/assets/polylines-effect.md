@@ -13,9 +13,9 @@
           Color,
       } from 'https://cdn.jsdelivr.net/npm/ogl@0.0.32/dist/ogl.mjs';
 
-      // function isTouchDevice() {
-      // return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-      // }
+      function isTouchDevice() {
+         return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+      }
 
       const hideCanvCursor = JSON.parse(localStorage.getItem('hideCanvCursor'));
       if (!isTouchDevice() && !hideCanvCursor) {
@@ -49,7 +49,6 @@
                       float pixelWidth = 1.0 / (uResolution.y / uDPR);
                       normal *= pixelWidth * uThickness;
 
-                      // When the points are on top of each other, shrink the line to avoid artifacts.
                       float dist = length(nextScreen - prevScreen);
                       normal *= smoothstep(0.0, 0.02, dist);
 
@@ -77,30 +76,16 @@
               function resize() {
                   renderer.setSize(window.innerWidth, window.innerHeight);
 
-                  // We call resize on the polylines to update their resolution uniforms
                   lines.forEach((line) => line.polyline.resize());
               }
               window.addEventListener('resize', resize, false);
 
-              // If you're interested in learning about drawing lines with geometry,
-              // go through this detailed article by Matt DesLauriers
-              // https://mattdesl.svbtle.com/drawing-lines-is-hard
-              // It's an excellent breakdown of the approaches and their pitfalls.
-
-              // In this example, we're making screen-space polylines. Basically it
-              // involves creating a geometry of vertices along a path - with two vertices
-              // at each point. Then in the vertex shader, we push each pair apart to
-              // give the line some width.
-
-              // Just a helper function to make the code neater
               function random(a, b) {
                   const alpha = Math.random();
                   return a * (1.0 - alpha) + b * alpha;
               }
 
-              // We're going to make a number of different coloured lines for fun.
-              // #BE9638
-              const lineColor = html.classList.contains('inverted') ? '#fff' : '#000';
+              const lineColor = '#fff';
 
               [lineColor].forEach((color, i) => {
 
@@ -111,7 +96,6 @@
                       mouseOffset: new Vec3(0.01),
                   };
 
-                  // Create an array of Vec3s (eg [[0, 0, 0], ...])
                   const count = 10;
                   const points = (line.points = []);
                   for (let i = 0; i < count; i++) points.push(new Vec3());
@@ -130,10 +114,8 @@
                   lines.push(line);
               });
 
-              // Call initial resize after creating the polylines
               resize();
 
-              // Add handlers to get mouse position
               const mouse = new Vec3();
               if ('ontouchstart' in window) {
                   window.addEventListener('touchstart', updateMouse, false);
@@ -152,7 +134,6 @@
                       e.y = e.pageY;
                   }
 
-                  // Get mouse value in -1 to 1 range, with y flipped
                   mouse.set(
                     (e.x / gl.renderer.width) * 2 - 1,
                     (e.y / gl.renderer.height) * -2 + 1,
@@ -166,15 +147,12 @@
                   requestAnimationFrame(update);
 
                   lines.forEach((line) => {
-                      // Update polyline input points
                       for (let i = line.points.length - 1; i >= 0; i--) {
                           if (!i) {
-                              // For the first point, spring ease it to the mouse position
                               tmp.copy(mouse).add(line.mouseOffset).sub(line.points[i]).multiply(line.spring);
                               line.mouseVelocity.add(tmp).multiply(line.friction);
                               line.points[i].add(line.mouseVelocity);
                           } else {
-                              // The rest of the points ease to the point in front of them, making a line
                               line.points[i].lerp(line.points[i - 1], 0.9);
                           }
                       }
