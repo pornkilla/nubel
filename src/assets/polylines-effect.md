@@ -168,3 +168,25 @@
 
   </script>
 ```
+orig:
+
+resolution: value: Vec2(2) [600, 300]
+count: 10
+dpr: {value: 2}
+gl {
+  renderer: Renderer
+  depth: true
+  dpr: 2
+  gl: 
+  WebGL2RenderingContext {renderer: Renderer, canvas: canvas#pageCanvas, drawingBufferWidth: 600, drawingBufferHeight: 300, drawingBufferColorSpace: 'srgb', …}
+  height: 150
+  isWebgl2: true
+  parameters: {maxTextureUnits: 32}
+  width: 300
+  canvas: canvas#pageCanvas
+  drawingBufferColorSpace: "srgb"
+  drawingBufferFormat: 32856
+  drawingBufferHeight: 300
+  drawingBufferWidth: 600
+  unpackColorSpace: "srgb"
+  }

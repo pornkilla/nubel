@@ -7,8 +7,9 @@ import {
   Color,
   OGLRenderingContext,
 } from 'ogl-typescript';
+import { PolylineOptions } from './polyline.types';
 
-const defaultVertex = /* glsl */ `
+export const defaultVertex = /* glsl */ `
   precision highp float;
 
   attribute vec3 position;
@@ -49,24 +50,13 @@ const defaultVertex = /* glsl */ `
 
 const defaultFragment = /* glsl */ `
   precision highp float;
-
   uniform vec3 uColor;
-
   varying vec2 vUv;
-
   void main() {
     gl_FragColor.rgb = uColor;
     gl_FragColor.a = 1.0;
   }
 `;
-
-export interface PolylineOptions {
-  points?: Vec3[];
-  vertex?: string;
-  fragment?: string;
-  thickness?: number;
-  color?: Color;
-}
 
 const tmp = new Vec3(); 
 
@@ -89,7 +79,6 @@ export default class Polyline extends Mesh {
    const count = points.length;
     if (count === 0) throw new Error('Polyline requires at least one point');
 
-    // Подготовка буферов (без this!)
     const position = new Float32Array(count * 3 * 2);
     const prev = new Float32Array(count * 3 * 2);
     const next = new Float32Array(count * 3 * 2);
@@ -150,12 +139,10 @@ updateGeometry() {
     const nextData = next.data as Float32Array;
 
     points.forEach((p, i) => {
-      // position: две копии точки
       p.toArray(posData, i * 3 * 2);
       p.toArray(posData, i * 3 * 2 + 3);
 
       if (i === 0) {
-        // prev для первой точки
         tmp.copy(p).sub(points[i + 1] || p).add(p);
         tmp.toArray(prevData, i * 3 * 2);
         tmp.toArray(prevData, i * 3 * 2 + 3);
@@ -165,7 +152,6 @@ updateGeometry() {
       }
 
       if (i === points.length - 1) {
-        // next для последней точки
         tmp.copy(p).sub(points[i - 1] || p).add(p);
         tmp.toArray(nextData, i * 3 * 2);
         tmp.toArray(nextData, i * 3 * 2 + 3);
@@ -182,7 +168,7 @@ updateGeometry() {
 
   resize() {
     if (this.resolution) {
-      this.resolution.value.set(window.innerWidth, window.innerHeight); // ✅ 2 аргумента
+      this.resolution.value.set(window.innerWidth, window.innerHeight);
     }
     if (this.dpr) {
       this.dpr.value = window.devicePixelRatio;

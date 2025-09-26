@@ -2,44 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Renderer as OGLRenderer, Transform, Vec3, Color } from 'ogl-typescript';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import Polyline from "./extras/polyline";
-
-const VERTEX = `
-  attribute vec3 position;
-  attribute vec3 next;
-  attribute vec3 prev;
-  attribute vec2 uv;
-  attribute float side;
-
-  uniform vec2 uResolution;
-  uniform float uDPR;
-  uniform float uThickness;
-
-  vec4 getPosition() {
-    vec2 aspect = vec2(uResolution.x / uResolution.y, 1);
-    vec2 nextScreen = next.xy * aspect;
-    vec2 prevScreen = prev.xy * aspect;
-
-    vec2 tangent = normalize(nextScreen - prevScreen);
-    vec2 normal = vec2(-tangent.y, tangent.x);
-    normal /= aspect;
-    normal *= 1.0 - pow(abs(uv.y - 0.5) * 1.9, 2.0);
-
-    float pixelWidth = 1.0 / (uResolution.y / uDPR);
-    normal *= pixelWidth * uThickness;
-
-    float dist = length(nextScreen - prevScreen);
-    normal *= smoothstep(0.0, 0.02, dist);
-
-    vec4 current = vec4(position, 1);
-    current.xy -= normal * side;
-    return current;
-  }
-
-  void main() {
-    gl_Position = getPosition();
-  }
-`;
+import Polyline, { defaultVertex } from "./extras/polyline";
+import { LinesI } from './extras/polyline.types';
 
   @Component({
   selector: 'app-root',
@@ -58,14 +22,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private oglRenderer!: OGLRenderer;
   private scene!: Transform;
   private mouse = new Vec3();
-  private lines: Array<{
-    spring: number;
-    friction: number;
-    mouseVelocity: Vec3;
-    mouseOffset: Vec3;
-    points: Vec3[];
-    polyline: Polyline;
-  }> = [];
+  private lines: LinesI[] = [];
   private animationId: number | null = null;
 
   constructor(private renderer2: Renderer2) {}
@@ -84,22 +41,21 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       alpha: true,
     });
 
-    this.oglRenderer.gl.clearColor(0, 0, 0, 0);
     this.scene = new Transform();
 
     const lineColor = '#ff52c5';
-    const numPoints = 20;
+    const numPoints = 10;
     const initialPoints = Array(numPoints).fill(0).map(() => new Vec3(0, 0, 0));
     const line = {
-      spring: 3,              // как в оригинале
-      friction: 0.1,          // как в оригинале
+      spring: 3, // 3
+      friction: 0.1, // 1
       mouseVelocity: new Vec3(),
-      mouseOffset: new Vec3(0.01), // как в оригинале (0.01, 0.01, 0.01)
+      mouseOffset: new Vec3(0.01), //new Vec3(0.01)
       points: [...initialPoints],
-      polyline: new Polyline(this.oglRenderer.gl, { // ← .gl, не renderer!
+      polyline: new Polyline(this.oglRenderer.gl, {
         points: [...initialPoints],
-        vertex: VERTEX,       // ← кастомный шейдер из оригинала
-        thickness: 10,         // как в оригинале
+        vertex: defaultVertex,
+        thickness: 5,
         color: new Color(lineColor),
       }),
     };
@@ -166,7 +122,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           line.mouseVelocity.add(tmp).multiply(line.friction);
           line.points[i].add(line.mouseVelocity);
         } else {
-          line.points[i].lerp(line.points[i - 1], 0.9);
+          line.points[i].lerp(line.points[i - 1], 0.489); //0.9
         }
       }
       line.polyline.updateGeometry();
