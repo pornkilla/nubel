@@ -1,4 +1,4 @@
-import { Color, Vec3 } from "ogl-typescript";
+import { Color, Vec2, Vec3 } from "ogl-typescript";
 import Polyline from "./polyline";
  
 export interface PolylineOptions {

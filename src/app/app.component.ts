@@ -5,7 +5,17 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import Polyline, { defaultVertex } from "./extras/polyline";
 import { LinesI } from './extras/polyline.types';
 
-  @Component({
+const CONFIG = {
+  dpr: 2,
+  lineColor: '#ff52c5',
+  spring: 3,  // 3
+  numPoints: 10,
+  friction: 0.1, // 0.1
+  mOffset: new Vec3(0.01),  //new Vec3(0.01)
+  thickness: 10,
+  lerp: 0.489, // 0.9
+}
+@Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
@@ -25,7 +35,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private lines: LinesI[] = [];
   private animationId: number | null = null;
 
-  constructor(private renderer2: Renderer2) {}
+  constructor(private renderer2: Renderer2) { }
 
   ngAfterViewInit() {
     this.initWebGL();
@@ -37,30 +47,31 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     const canvas = this.canvasRef.nativeElement;
     this.oglRenderer = new OGLRenderer({
       canvas,
-      dpr: 2,
+      dpr: CONFIG.dpr,
       alpha: true,
     });
+    console.warn(canvas.width,canvas.height);
 
     this.scene = new Transform();
 
-    const lineColor = '#ff52c5';
-    const numPoints = 10;
-    const initialPoints = Array(numPoints).fill(0).map(() => new Vec3(0, 0, 0));
+    const initialPoints = Array(CONFIG.numPoints).fill(0).map(() => new Vec3(0, 0, 0));
     const line = {
-      spring: 3, // 3
-      friction: 0.1, // 1
+      spring: CONFIG.spring,
+      friction: CONFIG.friction,
       mouseVelocity: new Vec3(),
-      mouseOffset: new Vec3(0.01), //new Vec3(0.01)
+      mouseOffset: CONFIG.mOffset,
       points: [...initialPoints],
       polyline: new Polyline(this.oglRenderer.gl, {
         points: [...initialPoints],
         vertex: defaultVertex,
-        thickness: 5,
-        color: new Color(lineColor),
+        thickness: CONFIG.thickness,
+        // uniforms:,
+        color: new Color(CONFIG.lineColor),
       }),
     };
 
     line.polyline.setParent(this.scene);
+    console.warn(line);
     this.lines.push(line);
 
     this.resize();
@@ -116,13 +127,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       for (let i = line.points.length - 1; i >= 0; i--) {
         if (i === 0) {
           tmp.copy(this.mouse)
-             .add(line.mouseOffset)
-             .sub(line.points[i])
-             .multiply(line.spring);
+            .add(line.mouseOffset)
+            .sub(line.points[i])
+            .multiply(line.spring);
           line.mouseVelocity.add(tmp).multiply(line.friction);
           line.points[i].add(line.mouseVelocity);
         } else {
-          line.points[i].lerp(line.points[i - 1], 0.489); //0.9
+          line.points[i].lerp(line.points[i - 1], CONFIG.lerp);
         }
       }
       line.polyline.updateGeometry();

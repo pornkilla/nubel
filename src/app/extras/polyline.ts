@@ -72,7 +72,7 @@ export default class Polyline extends Mesh {
     {
       points = [],
       vertex = defaultVertex,
-      thickness = 1.0,
+      thickness = 1,
       color = new Color('#000'),
     }: PolylineOptions = {}
   ) {
@@ -108,8 +108,10 @@ export default class Polyline extends Mesh {
     const uniforms: any = {
       uColor: { value: color },
       uThickness: { value: thickness },
-      uResolution: { value: new Vec2(gl.canvas.width, gl.canvas.height) },
-      uDPR: { value: gl.renderer.dpr },
+      uResolution: { value: new Vec2(gl.canvas.clientWidth, gl.canvas.clientHeight) },
+      // uResolution: { value: new Vec2(gl.canvas.width, gl.canvas.height) },
+      // uDPR: { value: gl.renderer.dpr },
+      uDPR: { value: window.devicePixelRatio },
     };
 
     const program = new Program(gl, {
@@ -168,7 +170,9 @@ updateGeometry() {
 
   resize() {
     if (this.resolution) {
-      this.resolution.value.set(window.innerWidth, window.innerHeight);
+      this.resolution.value.set(
+        this.gl.canvas.clientWidth,
+        this.gl.canvas.clientHeight);// this.resolution.value.set(window.innerWidth, window.innerHeight);
     }
     if (this.dpr) {
       this.dpr.value = window.devicePixelRatio;
