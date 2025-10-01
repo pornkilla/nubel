@@ -5,6 +5,16 @@
   --box: 6rem;
   --body-color: hsl(186, 97%, 72%);
 }
+#pageCanvas {
+  position: fixed;
+  display: block;
+  pointer-events: none;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
 body {
   font-size: 1rem;
   margin: 0;
