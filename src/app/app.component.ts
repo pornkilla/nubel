@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, ElementRef, ViewChild, OnDestroy, Renderer2, HostListener, NgZone, Inject, PLATFORM_ID } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, ElementRef, ViewChild, OnDestroy, HostListener, NgZone, Inject, PLATFORM_ID } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Vec3, Polyline, Renderer, Transform, Color } from 'ogl-typescript';
 
 const CONFIG = {
@@ -24,7 +24,9 @@ interface LineData {
 @Component({
   selector: 'app-root',
   imports: [
+    RouterLink,
     RouterOutlet,
+    RouterLinkActive,
     CommonModule,
   ],
   standalone: true,
@@ -42,10 +44,8 @@ export class AppComponent implements OnDestroy {
   private isInitialized: boolean = false;
 
   isBrowser: boolean;
-  private ogl: any;
 
   constructor(
-    private renderer2: Renderer2,
     private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: any) {
       this.isBrowser = isPlatformBrowser(this.platformId);

@@ -2,11 +2,18 @@
 
 :host {
 	@include center;
+  flex-direction: column;
+  z-index: 1;
 	flex: 1;
-	// overflow: hidden;
-	align-self: stretch;
 	position: relative;
-
+  background-repeat: no-repeat;
+  background-position: 0 75%;
+  background-size: cover;
+  background-image: url('/assets/bg.avif');
+  .credits {
+    display: flex;
+    flex: 1;
+  }
   .col {
     position: absolute;
     inset: 0 4rem auto auto;
@@ -60,6 +67,7 @@
   .vr {
     width: 400px;
     height: 240px;
+    margin: auto 0;
     z-index: 3;
     position: relative;
     background-image: url('/assets/vr.webp');

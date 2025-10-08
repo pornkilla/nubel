@@ -1,17 +1,20 @@
 @use 'styles/mixins' as *;
 
 :host {
-  @include center;
-  flex: 1;
   overflow: hidden;
-  align-self: stretch;
   color: var(--body-color);
   position: relative;
-  background-repeat: no-repeat;
-  background-position: 0 75%;
-  background-size: cover;
-  background-image: url('/assets/bg.avif');
-  
+  .content-wrapper {
+    flex: 1;
+    display: flex;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
   footer {
     position: absolute;
     bottom: 0;
@@ -24,6 +27,7 @@
     top: 0;
     left: 0;
     right: 0;
+    z-index: 2;
     nav {
       padding: 1rem 1.5rem;
       text-align: center;
