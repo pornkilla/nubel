@@ -2,8 +2,9 @@
 
 :host {
   overflow: hidden;
-  color: var(--body-color);
   position: relative;
+  color: var(--neon);
+  background: var(--gradient);
   .content-wrapper {
     flex: 1;
     display: flex;
@@ -31,8 +32,10 @@
     nav {
       padding: 1rem 1.5rem;
       text-align: center;
+      font-family: 'Tahion Narrow', sans-serif;
+      letter-spacing:0.15cap;
       a {
-        color: white;
+        color: var(--neon);
         &.active {
           color: beige;
         }

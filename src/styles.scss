@@ -3,7 +3,11 @@
 :root {
   --shift: 1.5rem;
   --box: 6rem;
-  --body-color: hsl(186, 97%, 72%);
+  --neon: oklch(88.607% 0.11268 205.257);
+  --body-color: oklch(27.962% 0.02048 276.914);
+  --magenta: oklch(44.254% 0.18929 342.878);
+  --darkmatter: oklch(27.249% 0.14101 303.761);
+  --gradient: linear-gradient(135deg, var(--magenta), var(--darkmatter));
 }
 #pageCanvas {
   position: fixed;
@@ -19,7 +23,7 @@ body {
   font-size: 1rem;
   margin: 0;
   padding: 0;
-  font-family: "Source Code Pro", monospace;
+  font-family: "Tahion Regular", monospace;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -27,7 +31,7 @@ body {
   height: 100vh;
   position: relative;
   display: flex;
-  background-color: darkslategray;
+  background-color: var(--body-color);
 }
 app-root {
   display: flex;
@@ -35,11 +39,13 @@ app-root {
   align-items: stretch;
   flex: 1;
 }
-.text-tahion-bold {
-  font-family: 'Tahion Bold', sans-serif;
-}
-.text-tahion-n {
-  font-family: 'Tahion Narrow', sans-serif;
+
+@font-face {
+  font-family: 'Tahion Regular';
+  src: 
+    url('assets/fonts/tahion/bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
@@ -56,4 +62,14 @@ app-root {
     url('assets/fonts/tahion/narrow-u.woff') format('woff');
     font-weight: 100;
     font-style: normal;
+}
+
+.text-tahion-regular {
+  font-family: 'Tahion Regular', sans-serif;
+}
+.text-tahion-bold {
+  font-family: 'Tahion Bold', sans-serif;
+}
+.text-tahion-n {
+  font-family: 'Tahion Narrow', sans-serif;
 }
