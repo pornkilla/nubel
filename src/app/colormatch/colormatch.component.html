@@ -1,1 +1,45 @@
-<p>colormatch works!</p>
+<div class="input-section split">
+  <div class="panel color-panel left-panel" >
+    <div class="swatch" [style.backgroundColor]="leftColor()">
+      <input
+        type="color"
+        id="left-color-picker"
+        [value]="leftColor()"
+        (input)="onLeftColorChange($event)"
+        placeholder="initial color"/>
+      <input
+        type="text"
+        id="left-color-text"
+        [value]="leftColor()"
+        (input)="onLeftColorChange($event)"
+        placeholder="#ff0000 или #f00"
+        class="hex-input"
+        [class.invalid]="!isHexValid(leftColor())"/>
+    </div>
+    <div class="desaturated-section" [style.backgroundColor]="desaturateColor(leftColor())">
+
+    </div>
+  </div>
+
+  <div class="panel color-panel right-panel" >
+    <div class="swatch" [style.backgroundColor]="rightColor()">
+      <input
+        type="color"
+        id="right-color-picker"
+        [value]="rightColor()"
+        (input)="onRightColorChange($event)"
+        placeholder="color to compare"/>
+      <input
+        type="text"
+        id="right-color-text"
+        [value]="rightColor()"
+        (input)="onRightColorChange($event)"
+        placeholder="#00ff00 или #0f0"
+        class="hex-input"
+        [class.invalid]="!isHexValid(rightColor())"/>
+    </div>
+    <div class="desaturated-section split" [style.backgroundColor]="desaturateColor(rightColor())">
+
+    </div>
+  </div>
+</div>

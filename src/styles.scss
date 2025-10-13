@@ -1,6 +1,7 @@
 @use 'styles/mixins' as *;
 
 :root {
+  --top-spacer: 6rem;
   --shift: 1.5rem;
   --box: 6rem;
   --neon: oklch(88.607% 0.11268 205.257);
@@ -33,6 +34,9 @@ body {
   position: relative;
   display: flex;
   background-color: var(--body-color);
+}
+* {
+  box-sizing: border-box;
 }
 app-root {
   display: flex;
