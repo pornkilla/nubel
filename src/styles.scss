@@ -8,6 +8,7 @@
   --magenta: oklch(44.254% 0.18929 342.878);
   --darkmatter: oklch(27.249% 0.14101 303.761);
   --gradient: linear-gradient(135deg, var(--magenta), var(--darkmatter));
+  --font-source-code-pro: 'Source Code Pro', monospace;
 }
 #pageCanvas {
   position: fixed;
@@ -23,7 +24,7 @@ body {
   font-size: 1rem;
   margin: 0;
   padding: 0;
-  font-family: "Tahion Regular", monospace;
+  font-family: "Tahion Regular", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
