@@ -7,8 +7,8 @@ import { Component, signal } from '@angular/core';
   styleUrl: './colormatch.component.scss'
 })
 export class ColormatchComponent {
-  leftColor = signal<string>('#bebebe');
-  rightColor = signal<string>('#f2f2f2');
+  leftColor = signal<string>('#d133af');
+  rightColor = signal<string>('#ca07a0');
 
   hexToHsl(hex: string): [number, number, number] {
     let h = hex.replace('#', '');
